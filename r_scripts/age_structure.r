@@ -10,8 +10,8 @@ library(tidyr)
 library(HMDHFDplus)
 library(gganimate)
 
-source("scripts/0_config.R")
-source("scripts/0_settings.R")
+source("r_scripts/0_config.R")
+source("r_scripts/0_settings.R")
 
 # load data --------------
 
