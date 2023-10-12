@@ -16,3 +16,7 @@ basic_theme <- theme_set(theme_base() +
         legend.text = element_text(size = 18, color = "grey30"),
         legend.title = element_blank()
     ))
+
+# other code snippets
+
+`%!in%` <- Negate(`%in%`) # function needed for later
