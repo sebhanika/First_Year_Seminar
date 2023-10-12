@@ -64,8 +64,6 @@ plot(swe_dat$Year, swe_dat$cbr, type = "l")
 
 # TFR --------------
 
-
-
 # Specify countries of interest
 tfr_countries <- c("SWE", "POL", "ESP", "AUT", "NLD", "BGR")
 tfr <- list()
@@ -91,14 +89,18 @@ tfr_comb %>%
     filter(year %in% 1900:2021) %>%
     ggplot() +
     geom_line(aes(x = year, y = tfr)) +
+    scale_x_continuous(
+        limits = c(1900, 2021),
+        breaks = seq(1900, 2020, 30)
+    ) +
     theme_base() +
     facet_wrap(~cntry)
 
-
-
+?scale_x_continuous()
 
 tfr_comb %>%
     filter(year %in% 1900:2021) %>%
     ggplot() +
     geom_line(aes(x = year, y = tfr, color = cntry)) +
+    scale_x_continuous(limits = c(1900, 2021), breaks = seq(1900, 2020, 20)) +
     theme_base()
