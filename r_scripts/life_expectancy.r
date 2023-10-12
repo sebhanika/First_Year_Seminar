@@ -18,7 +18,7 @@ source("scripts/0_settings.R")
 # life expectancy --------------
 
 # Specify countries of interest
-le_countries <- c("SWE", "POL", "ESP", "AUT", "NLD", "GBRTENW", "BGR")
+le_countries <- c("SWE", "POL", "ESP", "AUT", "NLD", "BGR")
 le <- list()
 
 # download data
@@ -42,4 +42,5 @@ le_comb %>%
     filter(year %in% 1900:2021) %>%
     ggplot() +
     geom_line(aes(x = year, y = female, color = cntry)) +
-    theme_base()
+    theme_base() +
+    facet_wrap(~cntry)

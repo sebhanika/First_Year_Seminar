@@ -14,8 +14,8 @@ library(HMDHFDplus)
 library(ggthemes)
 
 
-source("scripts/0_config.R")
-source("scripts/0_settings.R")
+source("r_scripts/0_config.R")
+source("r_scripts/0_settings.R")
 
 
 
@@ -67,7 +67,7 @@ plot(swe_dat$Year, swe_dat$cbr, type = "l")
 
 
 # Specify countries of interest
-tfr_countries <- c("SWE", "POL", "ESP")
+tfr_countries <- c("SWE", "POL", "ESP", "AUT", "NLD", "BGR")
 tfr <- list()
 
 # download data
@@ -85,6 +85,16 @@ for (i in seq_along(tfr_countries)) {
 # combine data
 tfr_comb <- do.call(dplyr::bind_rows, tfr) %>%
     janitor::clean_names()
+
+
+tfr_comb %>%
+    filter(year %in% 1900:2021) %>%
+    ggplot() +
+    geom_line(aes(x = year, y = tfr)) +
+    theme_base() +
+    facet_wrap(~cntry)
+
+
 
 
 tfr_comb %>%
