@@ -58,7 +58,6 @@ dat_plot <- dep_pop %>%
     )
 
 
-
 # create plot object
 dat_plot %>%
     filter(year %in% 1900:2021) %>%
