@@ -24,4 +24,22 @@ swe_pop <- readHMDweb(
     fixup = TRUE
 ) %>%
     select(c(Year, Age, Total2)) %>%
-    rename(pop = Total2)
+    rename(pop = Total2) %>%
+    janitor::clean_names()
+
+dep_pop <- swe_pop %>%
+    filter(age > 65) %>%
+    group_by(year) %>%
+    summarize(old_age_pop = sum(pop, na.rm = FALSE))
+
+
+old_pop <- swe_pop %>%
+    filter(age > 65) %>%
+    group_by(year) %>%
+    summarize(old_age_pop = sum(pop, na.rm = FALSE))
+
+
+work_pop <- swe_pop %>%
+    filter(age %in% 15:65) %>%
+    group_by(year) %>%
+    summarize(old_age_pop = sum(pop, na.rm = FALSE))
