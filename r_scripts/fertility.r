@@ -12,10 +12,12 @@ library(ggplot2)
 library(tidyr)
 library(HMDHFDplus)
 library(ggthemes)
-
+library(countrycode)
+library(nationalparkcolors)
 
 source("r_scripts/0_config.R")
 source("r_scripts/0_settings.R")
+
 
 
 
@@ -66,6 +68,29 @@ plot(swe_dat$Year, swe_dat$cbr, type = "l")
 
 # Specify countries of interest
 tfr_countries <- c("SWE", "POL", "ESP", "AUT", "NLD", "BGR")
+
+# create labels
+cntry_labels <- setNames(
+    tfr_countries,
+    countrycode(tfr_countries,
+        origin = "iso3c",
+        destination = "country.name"
+    )
+)
+
+cntry_labels <- setNames(
+    countrycode(tfr_countries,
+        origin = "iso3c",
+        destination = "country.name"
+    ),
+    tfr_countries
+)
+
+
+
+cntry_labels
+
+
 tfr <- list()
 
 # download data
@@ -94,13 +119,20 @@ tfr_comb %>%
         breaks = seq(1900, 2020, 30)
     ) +
     theme_base() +
-    facet_wrap(~cntry)
+    facet_wrap(~cntry, labeller = as_labeller(cntry_labels))
 
-?scale_x_continuous()
+
 
 tfr_comb %>%
     filter(year %in% 1900:2021) %>%
     ggplot() +
-    geom_line(aes(x = year, y = tfr, color = cntry)) +
+    geom_line(aes(x = year, y = tfr, color = cntry), lwd = 1.25) +
     scale_x_continuous(limits = c(1900, 2021), breaks = seq(1900, 2020, 20)) +
+    scale_color_manual(
+        values = park_palette(
+            "ArcticGates",
+            length(tfr_countries)
+        ), name = "Country",
+        labels = cntry_labels
+    ) +
     theme_base()
