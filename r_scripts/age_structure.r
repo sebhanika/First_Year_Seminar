@@ -87,7 +87,7 @@ age_pyrs
 ggsave(
     filename = "graphs/age_pyr_swe.png",
     plot = age_pyrs,
-    width = 32, height = 18, units = "cm"
+    width = 25, height = 25, units = "cm"
 )
 
 
@@ -115,6 +115,10 @@ pyr_anim <- swe_pop %>%
     labs(
         x = "Age",
         y = "Population in Thousand"
+    ) +
+    theme(
+        legend.position = "bottom",
+        legend.title = element_blank()
     )
 
 # create animation

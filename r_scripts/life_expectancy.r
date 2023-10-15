@@ -73,7 +73,7 @@ le_plot <- le_comb %>%
 
 # save plot
 ggsave(
-    filename = "graphs/le.png",
+    filename = "graphs/le2.png",
     plot = le_plot,
-    width = 32, height = 18, units = "cm"
+    width = 25, height = 25, units = "cm"
 )

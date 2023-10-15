@@ -70,7 +70,7 @@ tfr_plot <- tfr_comb %>%
 
 # save plot
 ggsave(
-    filename = "graphs/tfr.png",
+    filename = "graphs/tfr2.png",
     plot = tfr_plot,
-    width = 32, height = 18, units = "cm"
+    width = 25, height = 25, units = "cm"
 )
