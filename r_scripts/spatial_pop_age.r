@@ -85,12 +85,11 @@ ggsave(
 
 
 
-
-
 # Leaflet Map -------------- OLD
 
-# needs to be reprokected to WGS to workd
-
+# leaflet needs WGS to work
+dat_leaflet <- med_age %>%
+    st_transform(4326)
 
 # create bins for chrolopeth map
 
@@ -98,16 +97,16 @@ ggsave(
 data_pal <- colorBin(
     palette = self_palette,
     na.color = "#F8F8F8", # specify NA color
-    domain = med_age$values,
+    domain = dat_leaflet$values,
     bins = data_bins
 )
 
 
 
 # Specify what should be shown when clicking on municipality up content
-med_age$popup <- paste(
-    "<strong>", med_age$name_latn, "</strong>", "</br>",
-    med_age$values, "</br>"
+dat_leaflet$popup <- paste(
+    "<strong>", dat_leaflet$name_latn, "</strong>", "</br>",
+    dat_leaflet$values, "</br>"
 )
 
 
@@ -116,13 +115,13 @@ leaflet() %>%
     addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
     # polygons of Municipalities with Employment Growth data
     addPolygons(
-        data = med_age,
+        data = dat_leaflet,
         stroke = TRUE,
         weight = 0.1,
         color = "#ABABAB",
         smoothFactor = 0.3,
         opacity = 0.9, # of stroke
-        fillColor = ~ data_pal(med_age$values),
+        fillColor = ~ data_pal(dat_leaflet$values),
         fillOpacity = 0.8,
         popup = ~popup,
         highlightOptions = highlightOptions(
