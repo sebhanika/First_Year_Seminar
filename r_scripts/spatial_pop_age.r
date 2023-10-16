@@ -2,6 +2,7 @@
 # Date: 2023-10-15
 # Purpose: Script Purpose
 
+# /* cSpell:disable */
 
 library(tidyverse)
 library(geojsonsf)
@@ -33,7 +34,7 @@ age_dat <- get_eurostat("demo_r_pjanind3", time_format = "num") %>%
 # map settings
 
 # creating custom color palette
-self.palette <- c("#cc99ff", "#C2E699", "#78C679", "#31A354", "#006837")
+self_palette <- c("#cc99ff", "#b8ec7b", "#78C679", "#2c9b4d", "#015a31")
 
 # create bins for chrolopeth map
 
@@ -52,19 +53,27 @@ dat_map <- nuts3 %>%
     ))
 
 
-
-dat_map %>%
+age_map <- dat_map %>%
     ggplot() +
-    geom_sf(aes(fill = as.factor(val_int)), linewidth = 0.11) +
+    geom_sf(aes(fill = as.factor(val_int)),
+        linewidth = 0.1, alpha = 0.8
+    ) +
     coord_sf(xlim = c(-13, 37), ylim = c(33, 72), expand = FALSE) +
-    scale_fill_manual("Median Age", values = self.palette) +
-    theme_base()
-
+    scale_fill_manual("Median Age",
+        values = self_palette,
+        na.value = "#dfdfdf"
+    ) +
+    theme_base() +
+    theme(
+        axis.text = element_blank(),
+        axis.ticks = element_blank()
+    )
+age_map
 
 # save plot
 ggsave(
-    filename = "graphs/age_pyr_swe.png",
-    plot = age_pyrs,
+    filename = "graphs/age_map.png",
+    plot = age_map,
     width = 25, height = 25, units = "cm"
 )
 
@@ -75,15 +84,15 @@ ggsave(
 # Leaflet Map --------------
 
 # creating custom color palette
-self.palette <- c("#cc99ff", "#C2E699", "#78C679", "#31A354", "#006837")
+self._palette <- c("#cc99ff", "#C2E699", "#78C679", "#31A354", "#006837")
 
 # create bins for chrolopeth map
 
 data_bins <- BAMMtools::getJenksBreaks(dat_map$values, k = 6)
 
 
-data.pal <- colorBin(
-    palette = self.palette,
+data_pal <- colorBin(
+    palette = self_palette,
     na.color = "#F8F8F8", # specify NA color
     domain = dat_map$values,
     bins = data_bins
@@ -109,7 +118,7 @@ leaflet() %>%
         color = "#ABABAB",
         smoothFactor = 0.3,
         opacity = 0.9, # of stroke
-        fillColor = ~ data.pal(dat_map$values),
+        fillColor = ~ data_pal(dat_map$values),
         fillOpacity = 0.8,
         popup = ~popup,
         highlightOptions = highlightOptions(
