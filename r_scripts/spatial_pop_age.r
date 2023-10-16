@@ -22,27 +22,28 @@ nuts3 <- eurostat_geodata_60_2016 %>%
     subset(!grepl("^FRY|^FR$", nuts_id)) %>% # Exclude Oversee territories
     subset(cntr_code != "TR") %>% # Exclude Turkey territories
     select(c(cntr_code, name_latn, geo, geometry)) %>%
-    mutate(area = as.numeric(st_area(geometry) / 1000000)) # calc area
-
+    st_transform(3035)
 
 age_dat <- get_eurostat("demo_r_pjanind3", time_format = "num") %>%
-    filter(indic_de == "MEDAGEPOP", time == 2021)
-
-
-
+    filter(indic_de == "MEDAGEPOP", time == 2020)
 
 # map settings
 
 # creating custom color palette
 self_palette <- c("#cc99ff", "#b8ec7b", "#78C679", "#2c9b4d", "#015a31")
 
+self_palette <- c("#082766", "#164a8e", "#c3a088", "#9d6111", "#73370c")
+
+# bounding box
+xlim <- c(2426378.0132, 6593974.6215)
+ylim <- c(1328101.2618, 5446513.5222)
+
 # create bins for chrolopeth map
+dat_map <- nuts3 %>% left_join(age_dat, by = c("geo"))
 
 data_bins <- round(BAMMtools::getJenksBreaks(dat_map$values, k = 6), 0)
 
-
-dat_map <- nuts3 %>%
-    left_join(age_dat, by = c("geo")) %>%
+med_age <- dat_map %>%
     mutate(val_int = cut(values,
         breaks = data_bins, ,
         labels = c(
@@ -53,12 +54,12 @@ dat_map <- nuts3 %>%
     ))
 
 
-age_map <- dat_map %>%
+age_map <- med_age %>%
     ggplot() +
     geom_sf(aes(fill = as.factor(val_int)),
         linewidth = 0.1, alpha = 0.8
     ) +
-    coord_sf(xlim = c(-13, 37), ylim = c(33, 72), expand = FALSE) +
+    coord_sf(xlim = xlim, ylim = ylim, expand = FALSE) +
     scale_fill_manual("Median Age",
         values = self_palette,
         na.value = "#dfdfdf"
@@ -66,9 +67,12 @@ age_map <- dat_map %>%
     theme_base() +
     theme(
         axis.text = element_blank(),
-        axis.ticks = element_blank()
+        axis.ticks = element_blank(),
+        legend.position = c(0.9, 0.88)
     )
 age_map
+
+
 
 # save plot
 ggsave(
@@ -82,9 +86,6 @@ ggsave(
 
 
 # Leaflet Map --------------
-
-# creating custom color palette
-self._palette <- c("#cc99ff", "#C2E699", "#78C679", "#31A354", "#006837")
 
 # create bins for chrolopeth map
 
@@ -109,7 +110,7 @@ dat_map$popup <- paste(
 
 
 leaflet() %>%
-    addProviderTiles(providers$CartoDB.Positron) %>%
+    addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
     # polygons of Municipalities with Employment Growth data
     addPolygons(
         data = dat_map,
@@ -133,13 +134,13 @@ leaflet() %>%
         opacity = 0.9,
         title = "Median Age 2021",
         labels = c(
-            "33.8 - 41.8", "41.8-45.4", "45.4-49.1",
-            "49.1-56.3", "56.3+", "No data"
+            "34 - 41", "42 - 44",
+            "45 - 47", "48 - 50",
+            "50-56", "No data"
         ),
         colors = c(
-            "#cc99ff", "#C2E699", "#78C679",
-            "#31A354", "#006837", "#F8F8F8"
+            "#082766", "#164a8e",
+            "#c3a088", "#9d6111",
+            "#73370c", "#F8F8F8"
         )
     )
-
-data_bins
