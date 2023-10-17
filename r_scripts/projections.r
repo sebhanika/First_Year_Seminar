@@ -17,7 +17,7 @@ library(tidyr)
 
 # get eurostat
 age_proj_raw <- get_eurostat("proj_23np", time_format = "num")
-
+z
 # temp storage
 saveRDS(age_proj_raw, file = "data/age_proj_temp.RDS")
 
@@ -35,8 +35,6 @@ age_proj_swe <- age_proj_raw %>%
         age = as.numeric(gsub("^.", "", age)),
         sex = factor(sex, levels = c("M", "F"))
     )
-
-
 
 
 
@@ -95,25 +93,62 @@ ggsave(
 
 
 
+# Projections --------------
+
+proj_countries <- c("SE", "PL", "ES", "NL", "BG", "EU27_2020")
+
+# create labels
+country_labels <- c(
+    SE = "Sweden", PL = "Poland", ES = "Spain",
+    NL = "Netherlands", BG = "Bulgaria", EU27_2020 = "EU27"
+)
+
+proj_labels <- c(
+    BSL = "Baseline", LFRT = "Lower Fertility",
+    LMRT = "Lower mortatliy", HMIGR = "Higher Migration",
+    LMIGR = "Lower Migration", NMIGR = "No migration"
+)
 
 
-
-
-try1 <-
+dat_country_proj <-
     age_proj_raw %>%
     filter(
-        geo %in% c("SE", "BG", "PL", "NL", "ES", "EU27_2020"),
+        geo %in% proj_countries,
         age %in% c("TOTAL", "Y_GE65"),
-        sex == "F"
+        sex == "T"
     ) %>%
     group_by(projection, geo, time) %>%
-    summarize(values_new = values / lag(values, 1)) %>%
-    drop_na(values_new) %>%
-    ungroup()
+    reframe(values_new = values / lag(values, 1)) %>%
+    drop_na(values_new)
 
 
+plot_country_proj <- dat_country_proj %>%
+    ggplot(aes(
+        x = time, y = values_new,
+        shape = projection, color = projection
+    )) +
+    geom_point(size = 0.75) +
+    geom_line(lwd = 0.3) +
+    scale_color_manual(
+        values = park_palette("ArcticGates", length(proj_countries)),
+        labels = proj_labels
+    ) +
+    scale_shape_manual(
+        values = c(1, 2, 3, 4, 5, 6),
+        labels = proj_labels
+    ) +
+    labs(x = "Year", y = "Share of people aged 65+") +
+    facet_wrap(~geo, ncol = 2, labeller = as_labeller(country_labels)) +
+    theme(
+        legend.position = "bottom",
+        panel.spacing = unit(1.2, "lines"),
+        legend.key.size = unit(3, "line")
+    )
+plot_country_proj
 
-try1 %>%
-    ggplot(aes(x = time, y = values_new, linetype = projection)) +
-    geom_line() +
-    facet_wrap(~geo, ncol = 2)
+# save plot
+ggsave(
+    filename = "graphs/age_proj_countries.png",
+    plot = plot_country_proj,
+    width = 25, height = 25, units = "cm"
+)
