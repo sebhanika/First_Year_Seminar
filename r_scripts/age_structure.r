@@ -60,7 +60,7 @@ age_pyrs <- swe_pop %>%
     ggplot(aes(
         x = age,
         y = ifelse(sex == "male", -pop, pop),
-        pop, fill = sex
+        fill = sex
     )) +
     geom_bar(stat = "identity") +
     scale_y_continuous(
