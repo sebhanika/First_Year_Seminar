@@ -34,6 +34,8 @@ self_palette <- c("#cc99ff", "#b8ec7b", "#78C679", "#2c9b4d", "#015a31")
 
 self_palette <- c("#082766", "#164a8e", "#c3a088", "#9d6111", "#73370c")
 
+self_palette <- c("#eff3ff", "#bdd7e7", "#6baed6", "#3182bd", "#08519c")
+
 # bounding box
 xlim <- c(2426378.0132, 6593974.6215)
 ylim <- c(1328101.2618, 5446513.5222)
@@ -57,12 +59,12 @@ med_age <- dat_map %>%
 age_map <- med_age %>%
     ggplot() +
     geom_sf(aes(fill = as.factor(val_int)),
-        linewidth = 0.1, alpha = 0.8
+        linewidth = 0.1, alpha = 1
     ) +
     coord_sf(xlim = xlim, ylim = ylim, expand = FALSE) +
     scale_fill_manual("Median Age",
         values = self_palette,
-        na.value = "#dfdfdf"
+        na.value = "#a7a7a7"
     ) +
     theme_base() +
     theme(
