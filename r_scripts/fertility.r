@@ -14,7 +14,6 @@ library(nationalparkcolors)
 source("r_scripts/0_config.R")
 source("r_scripts/0_settings.R")
 
-
 # TFR --------------
 
 # Specify countries of interest
