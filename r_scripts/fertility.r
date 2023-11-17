@@ -68,9 +68,16 @@ tfr_plot <- tfr_comb %>%
         legend.title = element_blank()
     )
 
-# save plot
+# save plot text
 ggsave(
-    filename = "graphs/tfr2.png",
+    filename = "graphs/tfr_text.png",
     plot = tfr_plot,
     width = 25, height = 25, units = "cm"
+)
+
+# save plot presentation
+ggsave(
+    filename = "graphs/tfr_pres.png",
+    plot = tfr_plot,
+    width = 32, height = 18, units = "cm"
 )
