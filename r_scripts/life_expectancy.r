@@ -16,7 +16,7 @@ source("r_scripts/0_config.R")
 source("r_scripts/0_settings.R")
 
 
-# life expectancy --------------
+# life expectancy graphs --------------
 
 # Specify countries of interest
 le_countries <- c("SWE", "POL", "ESP", "NLD", "BGR")
@@ -29,7 +29,6 @@ cntry_labels <- setNames(
     ),
     le_countries
 )
-
 
 # download data
 le <- list()
@@ -70,10 +69,16 @@ le_plot <- le_comb %>%
     )
 
 
-
-# save plot
+# save plot for text
 ggsave(
-    filename = "graphs/le2.png",
+    filename = "graphs/le_text.png",
     plot = le_plot,
     width = 25, height = 25, units = "cm"
+)
+
+# save plot for presentation
+ggsave(
+    filename = "graphs/le_pres.png",
+    plot = le_plot,
+    width = 32, height = 18, units = "cm"
 )
