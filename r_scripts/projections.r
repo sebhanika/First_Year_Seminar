@@ -61,7 +61,10 @@ plot_country_proj <- dat_country_proj %>%
         values = c(1, 2, 3, 4, 5, 6),
         labels = proj_labels
     ) +
-    labs(x = "Year", y = "Share of people aged 65+") +
+    labs(
+        x = "Year", y = "Share of people aged 65+",
+        caption = "Source: Eurostat"
+    ) +
     facet_wrap(~geo, ncol = 2, labeller = as_labeller(country_labels)) +
     theme(
         legend.position = "bottom",
@@ -71,7 +74,14 @@ plot_country_proj <- dat_country_proj %>%
 
 # save plot
 ggsave(
-    filename = "graphs/age_proj_countries.png",
+    filename = "graphs/age_proj_text.png",
     plot = plot_country_proj,
     width = 25, height = 25, units = "cm"
+)
+
+# plot needs editing for presentation (dimensions)
+ggsave(
+    filename = "graphs/age_proj_pres.png",
+    plot = plot_country_proj,
+    width = 32, height = 18, units = "cm"
 )
