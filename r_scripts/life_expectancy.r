@@ -63,7 +63,7 @@ le_plot <- le_comb %>%
     ) +
     labs(
         x = "Year", y = "Female Period Life Expectancy in Years",
-        caption = "Source: Human Mortality database"
+        caption = "Source: Human Mortality Database"
     ) +
     theme_base() +
     theme(

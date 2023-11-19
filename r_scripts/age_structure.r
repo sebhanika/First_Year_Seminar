@@ -76,7 +76,7 @@ age_pyrs <- swe_pop %>%
     labs(
         x = "Age",
         y = "Population in Thousand",
-        caption = "Source: Human Mortality database"
+        caption = "Source: Human Mortality Database"
     ) +
     facet_wrap(~year) +
     theme(
@@ -117,7 +117,7 @@ pyr_anim <- swe_pop %>%
     labs(
         x = "Age",
         y = "Population in Thousand",
-        caption = "Source: Human Mortality database"
+        caption = "Source: Human Mortality Database"
     ) +
     theme(
         legend.position = "bottom",
