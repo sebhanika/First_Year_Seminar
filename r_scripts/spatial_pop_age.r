@@ -7,6 +7,7 @@
 library(tidyverse)
 library(geojsonsf)
 library(sf)
+library(ggspatial)
 library(eurostat)
 library(ggthemes)
 library(leaflet)
@@ -30,10 +31,6 @@ age_dat <- get_eurostat("demo_r_pjanind3", time_format = "num") %>%
 # map settings
 
 # creating custom color palette
-self_palette <- c("#cc99ff", "#b8ec7b", "#78C679", "#2c9b4d", "#015a31")
-
-self_palette <- c("#082766", "#164a8e", "#c3a088", "#9d6111", "#73370c")
-
 self_palette <- c("#eff3ff", "#bdd7e7", "#6baed6", "#3182bd", "#08519c")
 
 # bounding box
@@ -66,14 +63,14 @@ age_map <- med_age %>%
         values = self_palette,
         na.value = "#a7a7a7"
     ) +
+    labs(caption = "Source: Eurostat") +
     theme_base() +
     theme(
         axis.text = element_blank(),
         axis.ticks = element_blank(),
-        legend.position = c(0.9, 0.8)
-    )
-age_map
-
+        legend.position = c(0.91, 0.88)
+    ) +
+    annotation_scale(height = unit(0.15, "cm"))
 
 
 # save plot
@@ -82,69 +79,3 @@ ggsave(
     plot = age_map,
     width = 25, height = 25, units = "cm"
 )
-
-
-
-
-
-# Leaflet Map -------------- OLD
-
-# leaflet needs WGS to work
-dat_leaflet <- med_age %>%
-    st_transform(4326)
-
-# create bins for chrolopeth map
-
-
-data_pal <- colorBin(
-    palette = self_palette,
-    na.color = "#F8F8F8", # specify NA color
-    domain = dat_leaflet$values,
-    bins = data_bins
-)
-
-
-
-# Specify what should be shown when clicking on municipality up content
-dat_leaflet$popup <- paste(
-    "<strong>", dat_leaflet$name_latn, "</strong>", "</br>",
-    dat_leaflet$values, "</br>"
-)
-
-
-
-leaflet() %>%
-    addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
-    # polygons of Municipalities with Employment Growth data
-    addPolygons(
-        data = dat_leaflet,
-        stroke = TRUE,
-        weight = 0.1,
-        color = "#ABABAB",
-        smoothFactor = 0.3,
-        opacity = 0.9, # of stroke
-        fillColor = ~ data_pal(dat_leaflet$values),
-        fillOpacity = 0.8,
-        popup = ~popup,
-        highlightOptions = highlightOptions(
-            color = "#E2068A", # highlights borders when hovering
-            weight = 1.5,
-            bringToFront = TRUE,
-            fillOpacity = 0.5
-        )
-    ) %>%
-    addLegend(
-        position = "bottomright", # adding legend
-        opacity = 0.9,
-        title = "Median Age 2021",
-        labels = c(
-            "34 - 41", "42 - 44",
-            "45 - 47", "48 - 50",
-            "50-56", "No data"
-        ),
-        colors = c(
-            "#082766", "#164a8e",
-            "#c3a088", "#9d6111",
-            "#73370c", "#F8F8F8"
-        )
-    )
