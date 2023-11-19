@@ -61,13 +61,15 @@ le_plot <- le_comb %>%
         values = park_palette("ArcticGates", length(le_countries)),
         labels = cntry_labels
     ) +
-    labs(x = "Year", y = "Female Period Life Expectancy in Years") +
+    labs(
+        x = "Year", y = "Female Period Life Expectancy in Years",
+        caption = "Source: Human Mortality database"
+    ) +
     theme_base() +
     theme(
         legend.position = "bottom",
         legend.title = element_blank()
     )
-
 
 # save plot for text
 ggsave(
