@@ -17,15 +17,17 @@ source("r_scripts/0_settings.R")
 # TFR --------------
 
 # Specify countries of interest
-tfr_countries <- c("SWE", "POL", "ESP", "NLD", "BGR")
+tfr_countries <- c("SWE", "POL", "NLD", "BGR") # del when spain fixed
+tfr_countries_comp <- c("SWE", "POL", "ESP", "NLD", "BGR")
+
 
 # create labels
 cntry_labels <- setNames(
-    countrycode(tfr_countries,
+    countrycode(tfr_countries_comp,
         origin = "iso3c",
         destination = "country.name"
     ),
-    tfr_countries
+    tfr_countries_comp
 )
 
 # download data
@@ -41,8 +43,22 @@ for (i in seq_along(tfr_countries)) {
     tfr[[i]]$CNTRY <- tfr_countries[i]
 }
 
+
+########
+# Somehow there is an error when downloading spanish data
+# this error just started recently, it worked before
+# It could not be solved yet but  will be investigated furhter
+# In the mean time one needs to download the data manually
+
+# load spanish data
+
+spain <- readHFD(filepath = "ESPtfrRR.txt", fixup = TRUE) %>%
+    mutate(CNTRY = "ESP")
+
+
 # combine data
 tfr_comb <- do.call(dplyr::bind_rows, tfr) %>%
+    bind_rows(spain) %>%
     janitor::clean_names()
 
 
@@ -57,10 +73,13 @@ tfr_plot <- tfr_comb %>%
         breaks = seq(1900, 2020, 20)
     ) +
     scale_color_manual(
-        values = park_palette("ArcticGates", length(tfr_countries)),
+        values = park_palette("ArcticGates", length(tfr_countries_comp)),
         labels = cntry_labels
     ) +
-    labs(x = "Year", y = "Total Fertility Rate") +
+    labs(
+        x = "Year", y = "Total Fertility Rate",
+        caption = "Source: Human Fertility Database"
+    ) +
     theme_base() +
     theme(
         legend.position = "bottom",
