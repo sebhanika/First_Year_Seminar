@@ -75,7 +75,8 @@ age_pyrs <- swe_pop %>%
     coord_flip() +
     labs(
         x = "Age",
-        y = "Population in Thousand"
+        y = "Population in Thousand",
+        caption = "Source: Human Mortality database"
     ) +
     facet_wrap(~year) +
     theme(
@@ -83,6 +84,7 @@ age_pyrs <- swe_pop %>%
         legend.title = element_blank()
     )
 age_pyrs
+
 # save plot
 ggsave(
     filename = "graphs/age_pyr_swe.png",
@@ -114,7 +116,8 @@ pyr_anim <- swe_pop %>%
     coord_flip() +
     labs(
         x = "Age",
-        y = "Population in Thousand"
+        y = "Population in Thousand",
+        caption = "Source: Human Mortality database"
     ) +
     theme(
         legend.position = "bottom",
