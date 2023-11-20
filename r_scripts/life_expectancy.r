@@ -52,13 +52,20 @@ le_comb <- do.call(dplyr::bind_rows, le) %>%
 le_plot <- le_comb %>%
     filter(year %in% 1900:2021) %>%
     ggplot() +
-    geom_line(aes(x = year, y = female, color = cntry), lwd = 1.25) +
+    geom_line(aes(
+        x = year, y = female,
+        color = cntry, linetype = cntry
+    ), lwd = 1.25) +
     scale_x_continuous(
         limits = c(1900, 2021),
         breaks = seq(1900, 2020, 20)
     ) +
     scale_color_manual(
         values = park_palette("ArcticGates", length(le_countries)),
+        labels = cntry_labels
+    ) +
+    scale_linetype_manual(
+        values = c(1, 2, 3, 4, 5, 6),
         labels = cntry_labels
     ) +
     labs(
@@ -68,7 +75,8 @@ le_plot <- le_comb %>%
     theme_base() +
     theme(
         legend.position = "bottom",
-        legend.title = element_blank()
+        legend.title = element_blank(),
+        legend.key.width = unit(1.5, "cm")
     )
 
 # save plot for text
