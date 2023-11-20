@@ -12,6 +12,8 @@ library(ggplot2)
 library(ggthemes)
 library(tidyr)
 
+source("r_scripts/0_config.R")
+source("r_scripts/0_settings.R")
 
 # Eurostat projections --------------
 
@@ -49,15 +51,14 @@ dat_country_proj <-
 plot_country_proj <- dat_country_proj %>%
     ggplot(aes(
         x = time, y = values_new,
-        shape = projection, color = projection
+        color = projection, linetype = projection
     )) +
-    geom_point(size = 0.75) +
-    geom_line(lwd = 0.3) +
+    geom_line(lwd = 0.75) +
     scale_color_manual(
         values = park_palette("ArcticGates", length(proj_countries)),
         labels = proj_labels
     ) +
-    scale_shape_manual(
+    scale_linetype_manual(
         values = c(1, 2, 3, 4, 5, 6),
         labels = proj_labels
     ) +
@@ -69,8 +70,11 @@ plot_country_proj <- dat_country_proj %>%
     theme(
         legend.position = "bottom",
         panel.spacing = unit(1.2, "lines"),
-        legend.key.size = unit(3, "line")
-    )
+    ) +
+    theme(legend.key.width = unit(1.5, "cm")) +
+    guides(linetype = guide_legend(override.aes = list(size = 3)))
+
+plot_country_proj
 
 # save plot
 ggsave(
