@@ -66,7 +66,10 @@ tfr_comb <- do.call(dplyr::bind_rows, tfr) %>%
 tfr_plot <- tfr_comb %>%
     filter(year %in% 1900:2021) %>%
     ggplot() +
-    geom_line(aes(x = year, y = tfr, color = cntry), lwd = 1.25) +
+    geom_line(aes(
+        x = year, y = tfr,
+        color = cntry, linetype = cntry
+    ), lwd = 1.25) +
     geom_hline(yintercept = 2.1, color = "black", lty = 2) +
     scale_x_continuous(
         limits = c(1900, 2021),
@@ -76,6 +79,10 @@ tfr_plot <- tfr_comb %>%
         values = park_palette("ArcticGates", length(tfr_countries_comp)),
         labels = cntry_labels
     ) +
+    scale_linetype_manual(
+        values = c(1, 2, 3, 4, 5, 6),
+        labels = cntry_labels
+    ) +
     labs(
         x = "Year", y = "Total Fertility Rate",
         caption = "Source: Human Fertility Database"
@@ -83,8 +90,10 @@ tfr_plot <- tfr_comb %>%
     theme_base() +
     theme(
         legend.position = "bottom",
-        legend.title = element_blank()
+        legend.title = element_blank(),
+        legend.key.width = unit(1.5, "cm")
     )
+tfr_plot
 
 # save plot text
 ggsave(
