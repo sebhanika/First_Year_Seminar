@@ -65,7 +65,7 @@ le_plot <- le_comb %>%
         labels = cntry_labels
     ) +
     scale_linetype_manual(
-        values = c(1, 2, 3, 4, 5, 6),
+        values = c(1, 2, 3, 4, 6),
         labels = cntry_labels
     ) +
     labs(
@@ -78,6 +78,7 @@ le_plot <- le_comb %>%
         legend.title = element_blank(),
         legend.key.width = unit(1.5, "cm")
     )
+le_plot
 
 # save plot for text
 ggsave(

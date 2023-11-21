@@ -80,12 +80,16 @@ tfr_plot <- tfr_comb %>%
         labels = cntry_labels
     ) +
     scale_linetype_manual(
-        values = c(1, 2, 3, 4, 5, 6),
+        values = c(1, 2, 3, 4, 6),
         labels = cntry_labels
     ) +
     labs(
         x = "Year", y = "Total Fertility Rate",
         caption = "Source: Human Fertility Database"
+    ) +
+    annotate("text",
+        x = 1906, y = 2.15,
+        label = "Replacement-level fertility"
     ) +
     theme_base() +
     theme(
