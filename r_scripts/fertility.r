@@ -88,7 +88,7 @@ tfr_plot <- tfr_comb %>%
         caption = "Source: Human Fertility Database"
     ) +
     annotate("text",
-        x = 1906, y = 2.15,
+        x = 1907.5, y = 2.15,
         label = "Replacement-level fertility"
     ) +
     theme_base() +
