@@ -10,7 +10,7 @@ These figures follow the same structure used in the seminar text. You can find t
 - Lastly, I show a [map](graphs/age_map.png)  showcasing the median age for NUTS3 regions in Europe, highlighting the spatial variation of population ageing.
 
 ### Correction
-The initial version of the map depicting the median age in the NUTS3 area contained an error wherein Copenhagen was accidentally omitted. This error has been corrected, and the classes have been updated. The error stemmed from applying a rounding function after the natural breaks classification. The overall distribution and message conveyed by the map remained unaffected by the error.
+The initial version of the map in the text that depicts the median age in the NUTS3 area contained an error wherein Copenhagen was accidentally omitted. This error has been corrected, and the classes have been updated. The error stemmed from applying a rounding function after the natural breaks classification. The overall distribution and message conveyed by the map remained unaffected by the error.
 
 ## Data
 The data is sourced from the [Human Mortality database](https://www.mortality.org/), the [Human Fertility database](https://www.humanfertility.org/) as well as [Eurostat](https://ec.europa.eu/eurostat/databrowser/). The code is utilizing the [HMDHFDplus](https://cran.r-project.org/web/packages/HMDHFDplus/index.html) and [eurostat](https://cran.r-project.org/web/packages/eurostat/index.html) packages to download the data which simplifies the reproducibility.
