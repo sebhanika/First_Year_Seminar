@@ -51,7 +51,8 @@ med_age <- dat_map %>%
             "33.8 - 40.7", "40.7 - 43.8",
             "43.8 - 46.5", "46.5 - 49.5",
             "49.5 - 55.8"
-        )
+        ),
+        include.lowest = TRUE
     ))
 
 
@@ -75,12 +76,15 @@ age_map <- med_age %>%
     annotation_scale(height = unit(0.15, "cm"))
 
 
+
+
 # save plot
 ggsave(
     filename = "graphs/age_map.png",
     plot = age_map,
     width = 25, height = 25, units = "cm"
 )
+
 
 # Leaflet map --------------
 
