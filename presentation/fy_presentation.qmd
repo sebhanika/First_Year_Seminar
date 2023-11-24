@@ -1,5 +1,5 @@
 ---
-title: "First-year seminar"
+title: "Mapping the ageing workforce: Labour force participation among older adults in Swedish regions"
 author: "Sebastian Hanika - Department of Human Geography"
 format:
     revealjs:
@@ -7,18 +7,19 @@ format:
       logo: extensions/LundUniversity_C2line_RGB.png
       self-contained: true
       slide-number: c/t
-      fig-cap-location: top
+      fig-cap-location: bottom
       include-after-body: extensions/clean_title_page.html
 title-slide-attributes:
   data-background-image: "extensions/title_slide_background.png"
   data-background-size: contain
 ---
 
-## First Slide
+## Population ageing
 
-This is my first ever presentation using my quarto template for Lund University. I will include some basic features of quarto presentation in the following slides based on the example presentation on quarto.org
+- Population ageing re
+- Three drivers of population change: Fertility, Mortality and Migration
 
-## Bullets
+## Drivers of population ageing
 
 These are bullet points with Lund Colors:
 
@@ -28,26 +29,24 @@ These are bullet points with Lund Colors:
   - Another indented bullet points
 - Normal bullet point again
 
-## Code
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Life expectancy
 
-
-```{r}
-#| echo: true
-
-x <- 5*3
-print("X is equal to: ", x)
-```
-
-
-## Tabsets { .scrollable transition="slide"}
+## Drivers of population ageing {transition="slide"}
 
 ::: panel-tabset
-### Plot
+### Life expectancy
 
-```{r}
-library(ggplot2)
-ggplot(mtcars, aes(hp, mpg, color = am)) +
-  geom_point() +
-  geom_smooth(formula = y ~ x, method = "loess")
-```
+![](../graphs/le_pres.png){width=810}
+
+### Fertility
+
+![](../graphs/tfr_pres.png){width=810}
+:::
+
+## Ageing in Sweden
+
+![](../graphs/age_pyr_animated.gif){width=950}
+
+## Spatial variation in ageing 
+
+![](../graphs/age_map.png){width=500}
