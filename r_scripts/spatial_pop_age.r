@@ -11,6 +11,8 @@ library(ggspatial)
 library(eurostat)
 library(ggthemes)
 library(leaflet)
+library(htmlwidgets)
+
 
 source("r_scripts/0_settings.R")
 
@@ -40,15 +42,15 @@ ylim <- c(1328101.2618, 5446513.5222)
 # create bins for chrolopeth map
 dat_map <- nuts3 %>% left_join(age_dat, by = c("geo"))
 
-data_bins <- round(BAMMtools::getJenksBreaks(dat_map$values, k = 6), 0)
+data_bins <- BAMMtools::getJenksBreaks(dat_map$values, k = 6)
 
 med_age <- dat_map %>%
     mutate(val_int = cut(values,
         breaks = data_bins, ,
         labels = c(
-            "34 - 41", "42 - 44",
-            "45 - 47", "48 - 50",
-            "50-56"
+            "33.8 - 40.7", "40.7 - 43.8",
+            "43.8 - 46.5", "46.5 - 49.5",
+            "49.5 - 55.8"
         )
     ))
 
@@ -78,4 +80,67 @@ ggsave(
     filename = "graphs/age_map.png",
     plot = age_map,
     width = 25, height = 25, units = "cm"
+)
+
+# Leaflet map --------------
+
+# leaflet needs WGS to work
+dat_leaflet <- med_age %>%
+    st_transform(4326)
+
+# create bins for chrolopeth map
+
+
+data_pal <- colorBin(
+    palette = self_palette,
+    na.color = "#757575", # specify NA color
+    domain = dat_leaflet$values,
+    bins = data_bins
+)
+
+
+
+# Specify what should be shown when clicking on municipality up content
+dat_leaflet$popup <- paste(
+    "<strong>", dat_leaflet$name_latn, "</strong>", "</br>",
+    dat_leaflet$values, "</br>"
+)
+
+
+map_leaflet <-
+    leaflet() %>%
+    addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
+    # polygons of Municipalities with Employment Growth data
+    addPolygons(
+        data = dat_leaflet,
+        stroke = TRUE,
+        weight = 0.1,
+        color = "#ABABAB",
+        smoothFactor = 0.3,
+        opacity = 0.9, # of stroke
+        fillColor = ~ data_pal(dat_leaflet$values),
+        fillOpacity = 0.8,
+        popup = ~popup,
+        highlightOptions = highlightOptions(
+            color = "#E2068A", # highlights borders when hovering
+            weight = 1.5,
+            bringToFront = TRUE,
+            fillOpacity = 0.5
+        )
+    ) %>%
+    addLegend(
+        position = "bottomright", # adding legend
+        opacity = 0.9,
+        title = "Median Age 2021",
+        labels = c(
+            "33.8 - 40.7", "40.7 - 43.8",
+            "43.8 - 46.5", "46.5 - 49.5",
+            "49.5 - 55.8", "No values"
+        ),
+        colors = c(self_palette, "#757575")
+    )
+
+saveWidget(map_leaflet,
+    file = "graphs/map_leaflet.html",
+    selfcontained = FALSE
 )
