@@ -84,7 +84,7 @@ tfr_plot <- tfr_comb %>%
         labels = cntry_labels
     ) +
     labs(
-        x = "Year", y = "Total Fertility Rate",
+        x = "", y = "Total Fertility Rate",
         caption = "Source: Human Fertility Database"
     ) +
     annotate("text",

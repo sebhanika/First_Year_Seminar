@@ -69,7 +69,7 @@ le_plot <- le_comb %>%
         labels = cntry_labels
     ) +
     labs(
-        x = "Year", y = "Female Period Life Expectancy in Years",
+        x = "", y = "Female Period Life Expectancy in Years",
         caption = "Source: Human Mortality Database"
     ) +
     theme_base() +
