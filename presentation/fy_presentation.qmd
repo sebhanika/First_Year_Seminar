@@ -17,11 +17,11 @@ title-slide-attributes:
 ## Population ageing
 
 - Population ageing:\
-    *changes in the age structure of a population resulting an increase in the proportion of older adults*
+    *changes in the age structure of a population resulting in an increase in the proportion of older adults*
 
 \newline
 
-My research interest originates from on three observations:\ 
+My research interest originates from three points:\ 
 
 - Population ageing is a **challenge** and not a catastrophe
 - Demographic intervention is a **futile endeavour**
@@ -66,23 +66,54 @@ My research interest originates from on three observations:\
 
 ## Ageing and labour markets
 
-- Labor markets are central
+- Labour markets are central to the economics of population ageing:
+  - Workforces are ageing
+  - Labour supply is decreasing
+  - Yet older workers face many obstacles to continue working
+
+- Old-age employment is mainly influenced by:
+  - Health 
+  - Gender 
+  - Employment 
+  - Retirement policies
+
+- Regional demographics and labour markets are connected
+
+
+::: {.notes}
+Population Ageing Drivers:
+
+- Operate on different scales.
+- Imply diverse effects across geographic areas.
+:::
 
 
 ## Research aims
 
+- There is excessive emphasis on the extreme ends of both the age spectrum and the urban-rural continuum
+
+\newline
+
+My research aims are to:
+
 - Integrate demographic and geographic perspective on population ageing and its relation to the labour market dynamics.
 - Investigate the factors that contribute to spatial variations in the labour force participation of older workers
 
+
 ::: {.notes}
-My research is guided by addressing four very basic questions related to older workers: Who works? Where do they work? What type of work are doing? Why do they work?
+Who works? Where do they work? What type of work are doing? Why do they work?
 :::
 
 
-## Research Questions 1 & 2 
+## Research Questions
 
-- What are the demographic and socio-economic characteristics of older workers and how do they differ across regions?
-- What role does the composition and dynamics of local labour markets play in shaping labour force participation of older worker?
+Question 1:
+
+- *What are the demographic and socio-economic characteristics of older workers and how do they differ across regions?*
+
+Question 2:
+
+- *What role does the composition and dynamics of local labour markets play in shaping labour force participation of older worker?*
 
 ::: {.notes}
 - Establishing the ground work
@@ -90,12 +121,28 @@ My research is guided by addressing four very basic questions related to older w
 :::
 
 
-## Research Questions 3 & 4 
+## Research Questions
 
-- What is the impact of life course events on labour force participation and employment status during old age?
-- What are the migration patterns of older workers in the period leading up to their retirement, and how do these patterns influence their decisions regarding employment and retirement?
+Question 3:
+
+- *What is the impact of life course events on labour force participation and employment status during old age?*
+
+Question 4: 
+
+- *What are the migration patterns of older workers in the period leading up to their retirement, and how do these patterns influence their decisions regarding employment and retirement?*
 
 ::: {.notes}
 - Life course approach, how do career trajectories/events influence old-age employment (with spatial considerations)
 - Extension of part 3, zooming in on migration. often overlooked age group of migrants. 
 :::
+
+
+## Research design & Outlook
+
+- Compilation thesis (four articles)
+- Quantitative methods
+- Using swedish register data
+- Open for input on potential use of qualitative methods
+
+
+##
