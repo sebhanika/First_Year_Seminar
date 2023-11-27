@@ -55,7 +55,7 @@ med_age <- dat_map %>%
         include.lowest = TRUE
     ))
 
-
+# create map object
 age_map <- med_age %>%
     ggplot() +
     geom_sf(aes(fill = as.factor(val_int)),
@@ -76,9 +76,7 @@ age_map <- med_age %>%
     annotation_scale(height = unit(0.15, "cm"))
 
 
-
-
-# save plot
+# save map
 ggsave(
     filename = "graphs/age_map.png",
     plot = age_map,
@@ -93,8 +91,6 @@ dat_leaflet <- med_age %>%
     st_transform(4326)
 
 # create bins for chrolopeth map
-
-
 data_pal <- colorBin(
     palette = self_palette,
     na.color = "#757575", # specify NA color
@@ -102,15 +98,13 @@ data_pal <- colorBin(
     bins = data_bins
 )
 
-
-
 # Specify what should be shown when clicking on municipality up content
 dat_leaflet$popup <- paste(
     "<strong>", dat_leaflet$name_latn, "</strong>", "</br>",
     dat_leaflet$values, "</br>"
 )
 
-
+# create leaflet object
 map_leaflet <-
     leaflet() %>%
     addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
@@ -144,7 +138,25 @@ map_leaflet <-
         colors = c(self_palette, "#757575")
     )
 
+
 saveWidget(map_leaflet,
     file = "graphs/map_leaflet.html",
-    selfcontained = FALSE
+    selfcontained = TRUE
 )
+
+
+
+library(tidyverse)
+library(leaflet)
+library(htmlwidgets)
+
+x <- leaflet() %>%
+    addTiles() %>% # Add default OpenStreetMap map tiles
+    addMarkers(lng = 174.768, lat = -36.852, popup = "The birthplace of R")
+
+
+saveWidget(x,
+    file = "graphs/map_leaflet.html",
+    selfcontained = TRUE
+)
+rmarkdown::find_pandoc()
