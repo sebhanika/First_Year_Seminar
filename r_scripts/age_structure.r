@@ -36,7 +36,7 @@ swe_pop <- readHMDweb(
     mutate(sex = factor(sex, levels = c("male", "female")))
 
 
-# Four years --------------
+# Static graph/four years --------------
 
 ##### old pyramid code
 
@@ -110,7 +110,7 @@ pyr_anim <- swe_pop %>%
         labels = pop_labels
     ) +
     scale_fill_manual(
-        values = park_palette("ArcticGates", 2),
+        values = c("#cfb470", "#678096"),
         labels = c("Male", "Female")
     ) +
     coord_flip() +
@@ -123,6 +123,7 @@ pyr_anim <- swe_pop %>%
         legend.position = "bottom",
         legend.title = element_blank()
     )
+
 
 # create animation
 age_pyr_gif <- pyr_anim +
