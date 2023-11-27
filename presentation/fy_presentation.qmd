@@ -50,3 +50,4 @@ These are bullet points with Lund Colors:
 ## Spatial variation in ageing 
 
 ![](../graphs/age_map.png){width=500}
+
