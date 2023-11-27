@@ -62,7 +62,7 @@ age_map <- med_age %>%
         linewidth = 0.1, alpha = 1
     ) +
     coord_sf(xlim = xlim, ylim = ylim, expand = FALSE) +
-    scale_fill_manual("Median Age",
+    scale_fill_manual("Median Age (2020)",
         values = self_palette,
         na.value = "#a7a7a7"
     ) +
@@ -71,7 +71,7 @@ age_map <- med_age %>%
     theme(
         axis.text = element_blank(),
         axis.ticks = element_blank(),
-        legend.position = c(0.91, 0.88)
+        legend.position = c(0.88, 0.88)
     ) +
     annotation_scale(height = unit(0.15, "cm"))
 
