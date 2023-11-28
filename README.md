@@ -17,4 +17,4 @@ The data is sourced from the [Human Mortality database](https://www.mortality.or
 The code uses an untracked "config.R" file to store passwords for the Human Mortality and Fertility database. These would need to be added to the code separately by the user.  
 
 ## Presentation
-Shortly before the seminar, this repository will also contain the presentation.
+Shortly before the seminar, this repository will also contain the [presentation](presentation/fy_presentation.html).
